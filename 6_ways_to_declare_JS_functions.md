@@ -12,7 +12,7 @@
 
   It is easy to confuse the function declaration and function expression. They look very similar, but produce functions with different properties. An easy to remember rule: the function delcaration is a statement always starts with the keyword function. Otherwise it's a function expression.
 
-  ​
+  如
 
 - function expression
 
@@ -70,7 +70,7 @@
 
   ​
 
-- generator funciton
+  - generator funciton
 
 - Function constructor
 
@@ -144,3 +144,16 @@ method.sum(); //=>14
 
 
 
+
+
+var nav = document.querySelector('.nav');
+
+var toggleNav = function() {
+
+    console.log(this);
+    setTimeout(function() {
+        console.log(this);
+    }, 1000);
+};
+
+toggleNav();

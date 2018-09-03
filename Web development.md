@@ -77,7 +77,7 @@ export class MediaItemComponent{
 }
 ```
 
-When Angular parses the property syntax in a template, it is going to find either a match on a known DOM property named for an element OR a property decorated by the INPUT decorator. The DOM has built-in properties on existing elements. Components you create do not.
+When Angular parses the property syntax in a template, it is going to find either a match on a known DOM property named for an element OR a proaperty decorated by the INPUT decorator. The DOM has built-in properties on existing elements. Components you create do not.
 
 
 
@@ -129,4 +129,109 @@ Note that both ways work the same,  the same element ng-template is sth that nev
 A component in angular is just a directive with a template.
 
 The input decorator can be used on a directive class property just like on a component class property.
+
+
+
+```html
+<div>
+  <input [value] = "name" (input) = "name=$event.target.value">
+  {{name}}
+</div>
+```
+
+Following points need to be noted about the above code.
+
+```html
+[value] = "name" //this is used to bind the expression username to the input element's value property
+```
+
+```html
+(input) = "expression" //this's a declarative way of binding an expression to the input element's input event
+```
+
+```html
+name=$event.target.value //this expression gets executed when the input event is fired
+```
+
+```html
+$event// an expression exposed in event bindings by Angular, which has the value of the event's payload
+```
+
+
+
+## What's Arrow Funcitons##
+
+```javascript
+adiaLogAccepted => {
+  if(!aDialogAccepted)
+    
+}
+```
+
+This is an arrow funciton. Arrow functions are a short syntax, introduced by ECMAscript6, that can be used similarily to the way you use functions expressions.
+
+```javascript
+var a = [
+  "we are up all night till the sun",
+  "we are up all night to get some",
+]
+
+//these 2 assignments are equivalent
+//old school
+var a2 = a.map(function(s) {
+  return s.length
+});
+
+//EMCAscript 6 using arrow functions
+var a3 = a.map(s => s.length);
+
+//both a2 and a3 will be equal to [31, 30]
+```
+
+
+
+```
+console.time('fetcching data');
+fetch('https://api.github.com/users/sherrysack')
+.then(data => data.json())
+.then(data => {
+  console.timeEnd('fetching data');
+  console.log(data);
+});
+
+function add7(a) {
+	return a+7;
+}
+
+function multiply(a, b) {
+  return a*b;
+}
+
+function capitalize(a) {
+  return a.toUpperCase();
+}
+
+function lastLetter(s) {
+  return s[s.length-1];
+}
+
+
+option = ["Rock", "Paper", "Scissors"];
+function computerPlay {
+  return Random
+}
+```
+
+
+
+### Targeting Nodes with Selectors
+
+When working with the DOM, you use “selectors” to target the nodes you want to work with. You can use a combination of CSS-style selectors and relationship properties to target the nodes you want. Let’s start with CSS-style selectors. In the above example, you could use the following selectors to refer to `<div class="display"></div>`:
+
+- div.display
+- .display
+- container > .display
+- div#container > div.display
+
+
 
