@@ -93,7 +93,12 @@ class Solution {
 
 A much better way
 
+
+
 ```Java
+//when k == 1, then the orginial list should be returned.
+//although it seems that reverse node in k group is the generalized problem for reverse
+//node in 1 group, it is not!!!!!!! reverse linked list != reverse node in 1 group
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
         if(head == null) {
@@ -121,4 +126,3 @@ class Solution {
     }
 }
 ```
-
