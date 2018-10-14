@@ -36,7 +36,7 @@ After you finish this problem, thinks more :
 2. What is more, this problem is exact the same with Leetcode373 Find K Pairs with Smallest Sums, I use the same code which beats 96.42%, after you solve this problem, you can check with this link:
    <https://discuss.leetcode.com/topic/52953/share-my-solution-which-beat-96-42>
 
-```
+```java
 public class Solution {
     public int kthSmallest(int[][] matrix, int k) {
         int n = matrix.length;
@@ -78,7 +78,7 @@ Let me give you two examples of these two "search space"
 
 The reason why we did not use index as "search space" for this problem is the matrix is sorted in two directions, we can not find a linear way to map the number and its index.
 
-```
+```java
 public class Solution {
     public int kthSmallest(int[][] matrix, int k) {
         int lo = matrix[0][0], hi = matrix[matrix.length - 1][matrix[0].length - 1] + 1;//[lo, hi)
@@ -101,7 +101,7 @@ public class Solution {
 **Java Alternative Solution 2 with line-by-line comment**
 The following solution inspired by solution 2 might be a bit more verbose, but I found it consistent with my basic binary search template and easier to understand. This might not be a perfect solution, but this could help u to understand the idea behind the ingenious solution provided by the original Author
 
-```
+```java
     public int kthSmallest(int[][] matrix, int k) {
         // num of rows and cols in matrix
         int rows = matrix.length, cols = matrix[0].length;
