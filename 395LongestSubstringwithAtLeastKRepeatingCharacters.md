@@ -52,27 +52,31 @@ class Solution {
             while (j < str.length) {
                 if (unique <= h) {
                     idx = str[j] - 'a';
-                    if (counts[idx] == 0)
+                    if (counts[idx] == 0) {
                         unique++;
+                    }
                     counts[idx]++;
-                    if (counts[idx] == k)
+                    if (counts[idx] == k) {
                         noLessThanK++;
+                    }
                     j++;
                 }
                 else {
                     idx = str[i] - 'a';
-                    if (counts[idx] == k)
+                    if (counts[idx] == k){
                         noLessThanK--;
+                    }
                     counts[idx]--;
-                    if (counts[idx] == 0)
+                    if (counts[idx] == 0) {
                         unique--;
+                    }
                     i++;
                 }
-                if (unique == h && unique == noLessThanK)
+                if (unique == h && unique == noLessThanK) {
                     max = Math.max(j - i, max);
+                }
             }
         }
-        
         return max;
     }
 }
