@@ -22,6 +22,17 @@ class TrieNode {
         return chi.isWord;
     }
 
+    public boolean searchN(TrieNode root, String word) {
+        TrieNode[] chi = root.children;
+        for(int i = 0; i < word.length(); i++) {
+            int pos = word.charAt(i)-'a';
+            if(chi[pos] != null) {
+                chi = chi[pos].children;
+            }
+        }
+        return chi;
+    }
+
     public boolean insert(TrieNode root, String word) {
         //if existed, don't need to insert
         if(search(root, word)) return false;
@@ -62,6 +73,35 @@ class TrieNode {
         cur.isWord = false;
         return true;
     }
+
+    public List<String> findAllWithPrefix(TrieNode root, String prefix) {
+        TrieNode matchNode = searchN(root, prefix);
+        List<String> result = new ArrayList<>();
+        if(matchNode == null) return result;
+        dfsHelper(matchNode, new StirngBuilder(prefix), result);
+        return result;
+    }
+    
+    public void dfsHelper(TrieNode root, StringBuilder sb, List<String> res) {
+        for(int i = 0; i < root.children.length; i++) {
+            if(root.children[i] != null) {
+                sb.append((char)'a'+i);
+                if(root.children[i].isWord == true) {
+                    res.add(sb.toString());
+                }
+                dfsHelper(root.children[i], sb, res);
+                sb.setLength(sb.length()-1);
+            }
+        }
+    }
 }
 ```
+
+It can be extended to support more operations, what other possible queries can it support?
+
+Leetcode 10 Regular Expression
+
+Leetcode 44 WildCard
+
+Leetcode 212 WordSearchII.md
 
