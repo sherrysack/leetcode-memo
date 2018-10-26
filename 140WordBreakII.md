@@ -67,6 +67,7 @@ List<String> DFS(String s, Set<String> wordDict, HashMap<String, LinkedList<Stri
         return res;
     }               
     for (String word : wordDict) {
+        //use startsWith really save a lot of code....
         if (s.startsWith(word)) {
             List<String>sublist = DFS(s.substring(word.length()), wordDict, map);
             for (String sub : sublist) 
