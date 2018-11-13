@@ -22,6 +22,10 @@ s = "2[abc]3[cd]ef", return "abcabccdcdcdef".
 
 **Solution**
 
+sta and sta2 don't need to match, you just use sta2 to store whatever you have finished combining.
+
+
+
 ```java
 public class Solution {
     public String decodeString(String s) {

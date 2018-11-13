@@ -55,87 +55,138 @@ The user finished the input, the sentence `"i a"` should be saved as a historica
 
 ```java
 //my own solution
-public class AutocompleteSystem {
-    class TrieNode {
-        Map<Character, TrieNode> children;
-        Map<String, Integer> counts;
+class AutocompleteSystem {
+    private class TrieNode {
+        TrieNode[] children;
         boolean isWord;
+        int cnt;
         public TrieNode() {
-            children = new HashMap<Character, TrieNode>();
-            counts = new HashMap<String, Integer>();
-            isWord = false;
+            //the last one is space
+            this.children = new TrieNode[27];
+            this.isWord = false;
+            this.cnt = 0;
         }
     }
-    
-    class Pair {
-        String s;
-        int c;
-        public Pair(String s, int c) {
-            this.s = s; this.c = c;
-        }
-    }
-    
-    TrieNode root;
-    String prefix;
-    
-    
+    Map<String, Integer> map = new HashMap<>();
+    TrieNode origin=  new TrieNode();
     public AutocompleteSystem(String[] sentences, int[] times) {
-        root = new TrieNode();
-        prefix = "";
-        
-        for (int i = 0; i < sentences.length; i++) {
-            add(sentences[i], times[i]);
-        }
-    }
-    
-    private void add(String s, int count) {
-        TrieNode curr = root;
-        for (char c : s.toCharArray()) {
-            TrieNode next = curr.children.get(c);
-            if (next == null) {
-                next = new TrieNode();
-                curr.children.put(c, next);
-            }
-            curr = next;
-            curr.counts.put(s, curr.counts.getOrDefault(s, 0) + count);
-        }
-        curr.isWord = true;
-    }
-    
-    public List<String> input(char c) {
-        if (c == '#') {
-            add(prefix, 1);
-            prefix = "";
-            return new ArrayList<String>();
-        }
-        
-        prefix = prefix + c;
-        TrieNode curr = root;
-        for (char cc : prefix.toCharArray()) {
-            TrieNode next = curr.children.get(cc);
-            if (next == null) {
-                return new ArrayList<String>();
-            }
-            curr = next;
-        }
-        
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> (a.c == b.c ? a.s.compareTo(b.s) : b.c - a.c));
-        for (String s : curr.counts.keySet()) {
-            pq.add(new Pair(s, curr.counts.get(s)));
-        }
+        buildTrie(sentences, times);
 
-        List<String> res = new ArrayList<String>();
-        for (int i = 0; i < 3 && !pq.isEmpty(); i++) {
-            res.add(pq.poll().s);
+    }
+    public void buildTrie(String[] sentences, int[] times) {
+        int j = 0;
+
+        for(String str: sentences) {
+            TrieNode root = origin;
+            map.put(str, times[j]);
+            for(int i = 0; i < str.length(); i++) {
+                char a = str.charAt(i);
+                if(Character.isLetter(a) && root.children[a-'a'] == null) {
+                    root.children[a-'a'] = new TrieNode();
+                    root = root.children[a-'a'];
+                } else if(a == ' ') {
+                    if(root.children[26] == null) root.children[26] = new TrieNode();
+                    root = root.children[26];
+                }else {
+                    root = root.children[a-'a'];
+                }
+            }
+            root.isWord = true;
+            root.cnt = times[j++];
+        }
+    }
+    StringBuilder sb = new StringBuilder();
+    TrieNode cur = origin;
+
+    private class candidate implements Comparable<candidate>{
+        String cand;
+        int cnt;
+        public candidate(String a, int b) {
+            this.cand = a;
+            this.cnt = b;
+        }
+        public int compareTo(candidate c) {
+            if(c.cnt != this.cnt) {
+                return c.cnt > this.cnt ? 1:-1;
+            }else {
+                return this.cand.compareTo(c.cand);
+            }
+            
+        }
+    }
+
+    public List<String> input(char c) {
+        PriorityQueue<candidate> pq = new PriorityQueue<>();
+        int idx = 0;
+        List<String> res = new ArrayList<>();
+        if(c == '#') {
+            String[] src = new String[1];
+            src[0] =sb.toString();
+            int[] count = new int[1];
+            if(map.containsKey(src[0])) {
+                count[0] = map.get(src[0]);
+            }
+            count[0] += 1;
+            map.put(src[0], count[0]);
+            buildTrie(src, count);
+            sb = new StringBuilder();
+            cur = origin;
+            return res;
+        }else if(c == ' ') {
+            idx = 26;
+        }else {
+            idx = c-'a';
+        }
+        sb.append(c);
+        //the place to put this 
+        if(cur == null) return new ArrayList<String>();
+        if(cur.children[idx] == null) {
+            cur = null;
+            return res;
+        }else {
+            cur = cur.children[idx];
+        }
+        dfs(cur, pq, sb);
+        int k = 3;
+        
+        while(k-- > 0 && pq.size() > 0) {
+            candidate can = pq.poll();
+           res.add(can.cand);
+            //System.out.println(can.cnt);
         }
         return res;
+        
+    }
+
+    private void dfs(TrieNode cur, PriorityQueue<candidate> pq, StringBuilder sb) {
+        if(cur.isWord == true) {
+            
+            pq.offer(new candidate(sb.toString(), cur.cnt));
+        }
+        for(int i = 0; i < 27; i++) {
+            if(cur.children[i] != null) {
+                if(i != 26)  dfs(cur.children[i], pq, sb.append((char)('a'+i)));
+                else dfs(cur.children[i], pq, sb.append(" "));
+                sb.setLength(sb.length()-1);
+            }
+            
+        }
     }
 }
+
+/**
+ * Your AutocompleteSystem object will be instantiated and called as such:
+ * AutocompleteSystem obj = new AutocompleteSystem(sentences, times);
+ * List<String> param_1 = obj.input(c);
+ */
 ```
 
-```java
-//other's solution
 
+
+
+
+```java
+//other solution
 public class AutocompleteSystem {
     class TrieNode {
         Map<Character, TrieNode> children;

@@ -45,7 +45,49 @@ Output:
 []
 ```
 
+my own solution but exceeded the memory limit. but a good exercise for implementing my idea. and pay attention to the time complexity, the dp solution
 
+```java
+class Solution {
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        List<String> res = new ArrayList<>();
+        List<List<Integer>> cons = new ArrayList<List<Integer>>();
+        if(s == null || s.length() == 0) return res;
+        int[] dp = new int[s.length()+1];
+        Arrays.fill(dp, -1);
+        int cnt = 0;
+        dp[0] = 0;
+        Map<Integer, List<String>> map = new HashMap<>();
+        List<String> lst = new ArrayList<String>();
+        lst.add("");
+        map.put(0, lst);
+        for(int i = 1; i <= s.length(); i++) {
+            List<String> list = new ArrayList<String>();
+            map.put(i, list);
+            for(int j = 0; j < i; j++) {
+                for(int k = 0; k < wordDict.size(); k++) {
+                    String str = wordDict.get(k);
+                    if(i-j == str.length() && dp[j] >= 0 && s.substring(j, i).equals(str)) {
+                        dp[i] = k;
+                        List<String> temp = map.get(i);
+                        for(String part: map.get(j)) {
+                            temp.add(part+str+" ");
+                        }
+                        map.put(i, temp);
+                    }
+
+                        
+                    }
+                }
+            }
+        
+        for(String tempres: map.get(s.length())) {
+            res.add(tempres.substring(0, tempres.length()-1));
+        }
+        return res;
+    }
+}
+```
 
 
 

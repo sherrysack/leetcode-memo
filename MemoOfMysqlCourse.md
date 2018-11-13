@@ -236,3 +236,53 @@ ON customers.id = orders.customer_id;
 
 ```
 
+## 多表查询
+
+根据特定的连接条件从不同的表中获取所需的数据
+
+笛卡尔集的产生条件：
+
+1. 省略
+
+```sql
+DROP TABLE IF EXISTS cast_movie_junc;
+CREATE TABLE cast_movie_junc AS
+SELECT cc.cast_id, cc.movie_id, movies.score
+FROM
+(SELECT
+*
+FROM cast as c
+GROUP BY cast_id
+HAVING COUNT(c.movie_id) >= 3) G
+INNER JOIN cast cc on cc.cast_id == G.cast_id
+INNER JOIN movies on movies.id == cc.movie_id;
+
+SELECT @Part1 = first.cast_id, @Part2 = second.cast_id
+FROM
+    (SELECT
+        cast_id
+    FROM cast as c
+    GROUP BY cast_id
+    HAVING COUNT(c.movie_id) >= 3
+    ) first
+CROSS JOIN
+    (
+    SELECT
+        cast_id
+    FROM cast as c
+    GROUP BY cast_id
+    HAVING COUNT(c.movie_id) >= 3
+    ) second
+WHERE first.cast_id < second.cast_id;
+
+
+SELECT *
+FROM movies
+INNER JOIN cast c
+ON movies.id == c.movie_id
+WHERE c.cast_id in (Part1, Part2)
+GROUP BY movies.id
+HAVING COUNT(movies.id) > 1;
+
+```
+
