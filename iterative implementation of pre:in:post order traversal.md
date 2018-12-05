@@ -76,3 +76,4 @@ public List<Integer> postorderTraversal(TreeNode root) {
     return result;
 }
 ```
+The postorder is the same as the reversed preorder(first right, second left) version.

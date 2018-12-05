@@ -1,4 +1,4 @@
-##395Longest Substring with At Least K Repeating Characters
+# 395Longest Substring with At Least K Repeating Characters
 
 ------
 
