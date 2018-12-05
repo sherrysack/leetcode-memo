@@ -18,13 +18,13 @@ s = "2[abc]3[cd]ef", return "abcabccdcdcdef".
 
 run the test case:
 
-2[pq3[b]c]ef:
+**2[pq3[b]c]ef**:
 letter exists outside the last parentheses
 
-2[3[a]]:
+**2[3[a]]**:
 no letter exists between 2 left parentheses
 
-2[3[a]c]:
+**2[3[a]c]**:
 letter exists between the right parentheses and right parenthese;
 
 
