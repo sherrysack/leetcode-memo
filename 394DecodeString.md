@@ -16,7 +16,9 @@ s = "3[a2[c]]", return "accaccacc".
 s = "2[abc]3[cd]ef", return "abcabccdcdcdef".
 ```
 
-
+run the test case:
+2[pq3[b]c]ef
+2[3[a]c]
 
 
 
