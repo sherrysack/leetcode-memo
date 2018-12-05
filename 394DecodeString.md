@@ -16,6 +16,27 @@ s = "3[a2[c]]", return "accaccacc".
 s = "2[abc]3[cd]ef", return "abcabccdcdcdef".
 ```
 
+run the test case:
+
+**2[pq3[b]c]ef**:
+letter exists outside the last parentheses
+
+**2[3[a]]**:
+no letter exists between 2 left parentheses
+
+**2[3[a]c]**:
+letter exists between the right parentheses and right parenthese;
+
+
+You need to think out a rule to work on all kinds of string:
+
+(1) use a strStack to store string and a cntStack to store number, use a String of res to store the current result
+
+(2) Read the digit in a while loop, then push them into the cntStack
+
+(3) Encounter "[", push res into the strStack, and set res to ""
+
+(4) Encounter "]", pop the number n from the cntStack, and repeat the res for n times, strStack.peek() += res, res = strStack.poll()
 
 
 
