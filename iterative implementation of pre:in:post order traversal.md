@@ -6,7 +6,7 @@ Here I summarize the iterative implementation for preorder, inorder, and postord
 
 ------
 
-```
+```java
 public List<Integer> preorderTraversal(TreeNode root) {
     List<Integer> result = new ArrayList<>();
     Deque<TreeNode> stack = new ArrayDeque<>();
@@ -32,7 +32,7 @@ public List<Integer> preorderTraversal(TreeNode root) {
 
 ------
 
-```
+```java
 public List<Integer> inorderTraversal(TreeNode root) {
     List<Integer> result = new ArrayList<>();
     Deque<TreeNode> stack = new ArrayDeque<>();
@@ -58,7 +58,7 @@ public List<Integer> inorderTraversal(TreeNode root) {
 
 ------
 
-```
+```java
 public List<Integer> postorderTraversal(TreeNode root) {
     LinkedList<Integer> result = new LinkedList<>();
     Deque<TreeNode> stack = new ArrayDeque<>();
